@@ -1,0 +1,57 @@
+rules:
+  - id: hardcoded-secret
+    pattern: |
+      const $SECRET = "..."
+    message: "Found hardcoded secret value"
+    languages: [typescript]
+    severity: ERROR
+
+  - id: console-log
+    pattern: |
+      console.log(...)
+    message: "Found console.log statement in production code"
+    languages: [typescript]
+    severity: WARNING
+
+  - id: any-type
+    pattern: |
+      $VAR: any
+    message: "Avoid using 'any' type, specify proper type instead"
+    languages: [typescript]
+    severity: WARNING
+
+  - id: empty-catch
+    pattern: |
+      try {
+        ...
+      } catch {
+        ...
+      }
+    message: "Empty catch block detected"
+    languages: [typescript]
+    severity: WARNING
+
+  - id: magic-number
+    pattern: |
+      const $NUM = 42
+    message: "Magic number detected, consider using a named constant"
+    languages: [typescript]
+    severity: WARNING
+
+  - id: duplicate-import
+    pattern: |
+      import { $X } from '$Y';
+      ...
+      import { $X } from '$Y';
+    message: "Duplicate import detected"
+    languages: [typescript]
+    severity: WARNING
+
+  - id: long-method
+    pattern: |
+      function $NAME(...) {
+        ...
+      }
+    message: "Method is too long, consider breaking it into smaller methods"
+    languages: [typescript]
+    severity: WARNING

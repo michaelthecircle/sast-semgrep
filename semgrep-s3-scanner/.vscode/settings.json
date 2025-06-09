@@ -1,0 +1,7 @@
+{
+    "semgrepS3Scanner.endpoint": "http://localhost:9000",
+    "semgrepS3Scanner.accessKeyId": "minioadmin",
+    "semgrepS3Scanner.secretAccessKey": "minioadmin",
+    "semgrepS3Scanner.bucket": "semgrep-rules",
+    "semgrepS3Scanner.prefix": ""
+} 

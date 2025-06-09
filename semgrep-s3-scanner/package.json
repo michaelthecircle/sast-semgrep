@@ -10,16 +10,71 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:semgrep-s3-scanner.scanBucket"
+    "onCommand:semgrep-s3-scanner.addRule",
+    "onCommand:semgrep-s3-scanner.scanCode",
+    "onCommand:semgrep-s3-scanner.scanCurrentFile"
   ],
   "main": "./extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "semgrep-s3-scanner.scanBucket",
-        "title": "Scan S3 Bucket with Semgrep"
+        "command": "semgrep-s3-scanner.addRule",
+        "title": "Add Semgrep Rule to S3"
+      },
+      {
+        "command": "semgrep-s3-scanner.scanCode",
+        "title": "Scan Code with Semgrep Rules"
+      },
+      {
+        "command": "semgrep-s3-scanner.scanCurrentFile",
+        "title": "Scan Current File with Semgrep Rules"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Semgrep S3 Scanner",
+      "properties": {
+        "semgrepS3Scanner.endpoint": {
+          "type": "string",
+          "default": "http://localhost:9000",
+          "description": "S3 endpoint URL"
+        },
+        "semgrepS3Scanner.accessKeyId": {
+          "type": "string",
+          "default": "minioadmin",
+          "description": "S3 access key ID"
+        },
+        "semgrepS3Scanner.secretAccessKey": {
+          "type": "string",
+          "default": "minioadmin",
+          "description": "S3 secret access key"
+        },
+        "semgrepS3Scanner.bucket": {
+          "type": "string",
+          "default": "semgrep-rules",
+          "description": "S3 bucket name"
+        },
+        "semgrepS3Scanner.prefix": {
+          "type": "string",
+          "default": "",
+          "description": "Prefix for rules in S3"
+        },
+        "semgrepS3Scanner.saveReports": {
+          "type": "boolean",
+          "default": false,
+          "description": "Save scan reports to S3"
+        },
+        "semgrepS3Scanner.reportsBucket": {
+          "type": "string",
+          "default": "semgrep-reports",
+          "description": "S3 bucket name for reports"
+        },
+        "semgrepS3Scanner.reportsPrefix": {
+          "type": "string",
+          "default": "reports/",
+          "description": "Prefix for reports in S3"
+        }
+      }
+    }
   },
   "scripts": {
     "lint": "eslint .",
@@ -39,6 +94,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.0.0",
-    "semgrep": "^1.0.0"
+    "semgrep": "^1.0.0",
+    "yaml": "^2.3.4"
   }
 } 
