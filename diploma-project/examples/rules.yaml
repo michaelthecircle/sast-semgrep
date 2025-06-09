@@ -1,0 +1,103 @@
+rules:
+  - id: optional-api-property
+    pattern: |
+      @ApiProperty({
+        ...
+        required: false,
+        ...
+      })
+      $PROPERTY?: $TYPE;
+    message: "Optional properties should use @ApiPropertyOptional decorator"
+    languages: [typescript]
+    severity: WARNING
+    metadata:
+      category: best-practices
+      references:
+        - https://docs.nestjs.com/openapi/decorators
+
+  - id: hardcoded-secret
+    pattern: |
+      $SECRET = "..."
+    message: "Found hardcoded secret value"
+    languages: [typescript, python, java]
+    severity: ERROR
+    metadata:
+      category: security
+      references:
+        - https://owasp.org/www-community/vulnerabilities/Use_of_hard-coded_credentials
+
+  - id: console-log
+    pattern: |
+      console.log(...)
+    message: "Found console.log statement in production code"
+    languages: [typescript, javascript]
+    severity: WARNING
+    metadata:
+      category: best-practices
+      references:
+        - https://eslint.org/docs/rules/no-console
+
+  - id: any-type
+    pattern: |
+      $VAR: any
+    message: "Avoid using 'any' type, specify proper type instead"
+    languages: [typescript]
+    severity: WARNING
+    metadata:
+      category: type-safety
+      references:
+        - https://www.typescriptlang.org/docs/handbook/declaration-files/do-s-and-don-ts.html
+
+  - id: empty-catch
+    pattern: |
+      try {
+        ...
+      } catch {
+        ...
+      }
+    message: "Empty catch block detected"
+    languages: [typescript, javascript, python, java]
+    severity: WARNING
+    metadata:
+      category: error-handling
+      references:
+        - https://eslint.org/docs/rules/no-empty-catch
+
+  - id: magic-number
+    pattern: |
+      $NUM = 42
+    message: "Magic number detected, consider using a named constant"
+    languages: [typescript, javascript, python, java]
+    severity: WARNING
+    metadata:
+      category: code-quality
+      references:
+        - https://en.wikipedia.org/wiki/Magic_number_(programming)
+
+  - id: duplicate-import
+    pattern: |
+      import { $X } from '$Y';
+      ...
+      import { $X } from '$Y';
+    message: "Duplicate import detected"
+    languages: [typescript, javascript]
+    severity: WARNING
+    metadata:
+      category: code-quality
+      references:
+        - https://eslint.org/docs/rules/no-duplicate-imports
+
+  - id: long-method
+    pattern: |
+      function $NAME(...) {
+        ...
+        ...  # More than 20 lines
+        ...
+      }
+    message: "Method is too long, consider breaking it into smaller methods"
+    languages: [typescript, javascript, python, java]
+    severity: WARNING
+    metadata:
+      category: code-quality
+      references:
+        - https://refactoring.guru/smells/long-method 

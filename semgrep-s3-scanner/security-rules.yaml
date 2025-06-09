@@ -1,0 +1,7 @@
+rules:
+  - id: hardcoded-secrets
+    pattern: |
+      $SECRET = "..."
+    message: "Found hardcoded secret value"
+    languages: [typescript, python, java]
+    severity: ERROR

@@ -1,0 +1,82 @@
+rules:
+  - id: path-traversal
+    pattern: |
+      fs.readFileSync($PATH)
+      ...
+      fs.readFile($PATH)
+      ...
+      require($PATH)
+    message: "Potential path traversal vulnerability detected"
+    languages: [javascript]
+    severity: ERROR
+    metadata:
+      category: security
+      references:
+        - https://owasp.org/www-community/attacks/Path_Traversal
+      fix: "Use path.basename() or validate input paths"
+
+  - id: insecure-deserialization
+    pattern: |
+      JSON.parse($INPUT)
+      ...
+      eval($INPUT)
+      ...
+      new Function($INPUT)
+    message: "Insecure deserialization detected"
+    languages: [javascript]
+    severity: ERROR
+    metadata:
+      category: security
+      references:
+        - https://owasp.org/www-community/vulnerabilities/Deserialization_of_untrusted_data
+      fix: "Use safe deserialization methods and validate input"
+
+  - id: hardcoded-secrets
+    pattern: |
+      $SECRET = "..."
+      ...
+      password = "..."
+      ...
+      apiKey = "..."
+      ...
+      token = "..."
+    message: "Hard-coded secret detected"
+    languages: [typescript, javascript, python, java]
+    severity: ERROR
+    metadata:
+      category: security
+      references:
+        - https://owasp.org/www-community/vulnerabilities/Use_of_hard-coded_credentials
+      fix: "Use environment variables or secure secret management"
+
+  - id: null-pointer
+    pattern: |
+      $OBJ.$PROP
+      ...
+      $OBJ[$KEY]
+      ...
+      $OBJ.method()
+    message: "Potential null pointer dereference"
+    languages: [typescript, javascript, python, java]
+    severity: ERROR
+    metadata:
+      category: reliability
+      references:
+        - https://cwe.mitre.org/data/definitions/476.html
+      fix: "Add null checks before accessing properties"
+
+  - id: resource-leak
+    pattern: |
+      $RESOURCE = open(...)
+      ...
+      $RESOURCE = createConnection(...)
+      ...
+      $RESOURCE = new FileStream(...)
+    message: "Resource may not be properly closed"
+    languages: [typescript, javascript, python, java]
+    severity: WARNING
+    metadata:
+      category: reliability
+      references:
+        - https://cwe.mitre.org/data/definitions/404.html
+      fix: "Use try-finally or resource management patterns" 
